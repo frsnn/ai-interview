@@ -1,0 +1,20 @@
+import datetime as dt
+
+from sqlalchemy import String, Text, func
+from sqlalchemy.orm import Mapped, mapped_column
+
+from src.db.base import Base
+
+
+class Job(Base):
+    __tablename__ = "jobs"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    title: Mapped[str] = mapped_column(String(255), nullable=False)
+    description: Mapped[str | None] = mapped_column(Text())
+    created_at: Mapped[dt.datetime] = mapped_column(
+        default=func.now(), nullable=False, server_default=func.now()
+    )
+    updated_at: Mapped[dt.datetime] = mapped_column(
+        default=func.now(), onupdate=func.now(), server_default=func.now()
+    ) 
