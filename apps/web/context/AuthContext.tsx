@@ -19,30 +19,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const stored = localStorage.getItem("token");
     if (!stored) return; // nothing to verify
 
-    // Fast verification – call the protected user endpoint
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/users/me`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${stored}`,
-      },
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("invalid");
-        return res.json();
-      })
-      .then(() => {
+    // Simply trust the stored token (will be validated on first API call)
+    console.log("Found stored token, setting auth state");
         setToken(stored);
-      })
-      .catch(() => {
-        localStorage.removeItem("token");
-        setToken(null);
-      });
   }, []);
 
   const login = (t: string) => {
     localStorage.setItem("token", t);
     setToken(t);
-    router.push("/jobs");
+    router.push("/dashboard");
   };
   const logout = () => {
     localStorage.removeItem("token");

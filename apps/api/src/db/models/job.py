@@ -1,6 +1,6 @@
 import datetime as dt
 
-from sqlalchemy import String, Text, func
+from sqlalchemy import String, Text, func, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
 from src.db.base import Base
@@ -10,6 +10,7 @@ class Job(Base):
     __tablename__ = "jobs"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[str | None] = mapped_column(Text())
     created_at: Mapped[dt.datetime] = mapped_column(

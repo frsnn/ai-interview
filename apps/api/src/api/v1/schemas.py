@@ -1,7 +1,69 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
+from enum import Enum
 
 from pydantic import BaseModel, Field, EmailStr
+
+
+# ---- Conversation ----
+
+class MessageRole(str, Enum):
+    ASSISTANT = "assistant"
+    USER = "user"
+    SYSTEM = "system"
+
+
+class ConversationMessageCreate(BaseModel):
+    interview_id: int
+    role: MessageRole
+    content: str
+    sequence_number: int
+
+
+class ConversationMessageRead(BaseModel):
+    id: int
+    interview_id: int
+    role: MessageRole
+    content: str
+    timestamp: datetime
+    sequence_number: int
+
+    model_config = {"from_attributes": True}
+
+
+# ---- Interview Analysis ----
+
+class InterviewAnalysisCreate(BaseModel):
+    interview_id: int
+    overall_score: Optional[float] = None
+    summary: Optional[str] = None
+    strengths: Optional[str] = None
+    weaknesses: Optional[str] = None
+    technical_assessment: Optional[str] = None
+    communication_score: Optional[float] = None
+    technical_score: Optional[float] = None
+    cultural_fit_score: Optional[float] = None
+    analysis_prompt: Optional[str] = None
+    model_used: Optional[str] = None
+
+
+class InterviewAnalysisRead(BaseModel):
+    id: int
+    interview_id: int
+    overall_score: Optional[float]
+    summary: Optional[str]
+    strengths: Optional[str]
+    weaknesses: Optional[str]
+    technical_assessment: Optional[str]
+    communication_score: Optional[float]
+    technical_score: Optional[float]
+    cultural_fit_score: Optional[float]
+    analysis_prompt: Optional[str]
+    model_used: Optional[str]
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = {"from_attributes": True}
 
 
 # ---- Job ----
@@ -22,6 +84,7 @@ class JobUpdate(BaseModel):
 
 class JobRead(JobBase):
     id: int
+    user_id: int
     created_at: datetime
     updated_at: datetime
 
@@ -39,7 +102,7 @@ class CandidateBase(BaseModel):
 
 
 class CandidateCreate(CandidateBase):
-    pass
+    expires_in_days: Optional[int] = Field(default=7, ge=1, le=365)  # Default 7 days, min 1 day, max 1 year
 
 
 class CandidateUpdate(BaseModel):
@@ -50,6 +113,7 @@ class CandidateUpdate(BaseModel):
 
 class CandidateRead(CandidateBase):
     id: int
+    user_id: int
     created_at: datetime
 
     model_config = {"from_attributes": True}
@@ -74,4 +138,12 @@ class InterviewRead(BaseModel):
 
 
 class InterviewStatusUpdate(BaseModel):
-    status: str = Field(..., pattern="^(pending|completed)$") 
+    status: str = Field(..., pattern="^(pending|completed)$")
+
+
+# --- Media upload ---
+
+
+class InterviewMediaUpdate(BaseModel):
+    audio_url: Optional[str] = None
+    video_url: Optional[str] = None 

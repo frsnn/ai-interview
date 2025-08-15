@@ -14,4 +14,5 @@ class PresignRequest(BaseModel):
 
 @router.post("/presign")
 async def presign(req: PresignRequest, user=Depends(current_active_user)):
-    return generate_presigned_put_url(req.file_name, req.content_type) 
+    # Keep uploads prefix for generic admin uploads
+    return generate_presigned_put_url(req.file_name, req.content_type, prefix="uploads")

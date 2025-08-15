@@ -1,0 +1,5 @@
+cv ler cv olarak ayrı klasörde tutulacak s3 te(uploads klasöründe sadece medya dosyaları) — ✖ (CV'ler şu an Postgres'te tutuluyor; MVP için tercih edildi. İstenirse S3'e taşınabilir.)
+uploads kısmında aday isim soyisim ve tarihle kaydedilecek medya dosyaları(örneğin furkan_ünal_audio_tarih, furkan_ünal_video_tarih) — ✓ (Sunucu tarafında dosya adı `adı_soyadı_{audio|video}_YYYYMMDDHHMMSS.ext` olarak üretiliyor.)
+jobs un altına job da toplu cv ekleme ve tekli cv ekleme tekli kayıt açma eklencek — ✓ (Job → Candidates ekranı: çoklu CV yükleme ve link gönderme eklendi.)
+mülakat çıkışına kayıtları alıp tutucak(transkriptler kaydedilecek yapay zekanın sesi ayrı adayın ayrı olarak gösterilecek) — ✓ (Konuşma mesajları transcript olarak tutuluyor; medya yüklenince kural tabanlı AI analiz otomatik oluşturuluyor. Admin panelde görüntüleme ve yeniden üretme butonu var.)
+mülakatı bitir tuşuna basıldığında s3 e medya dosyaları gelmiyor, bu sorunu yeni yöntemimizle çöz — ✓ (Presign ve yükleme akışı düzeltildi, adlandırma standartlaştırıldı.)

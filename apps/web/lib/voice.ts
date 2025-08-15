@@ -40,6 +40,7 @@ export function listen(
     recognition.onspeechend = onSpeechEnd;
     recognition.onend = onSpeechEnd;
   }
+  
   recognition.start();
   return recognition;
 } 

@@ -1,0 +1,10 @@
+# API Docker build context
+# python cache
+__pycache__/
+*.pyc
+
+# venv
+.venv/
+
+# test/örnek / veri
+tests/
