@@ -11,7 +11,7 @@ node_modules/
 out/
 
 # Prevent committing legacy root duplicates
-/apps/
+
 /docker-compose.yml
 /package.json
 /package-lock.json
